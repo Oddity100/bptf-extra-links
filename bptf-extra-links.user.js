@@ -25,15 +25,8 @@
     const pageURL = window.location.pathname;
 
     // Lazy switch statement (I know...)
-    if (pageURL) {
-      switch (true) {
-        case pageURL.includes("/stats/"):
-          addMarketplaceButton();
-          summarizeKS();
-          break;
-        case pageURL.includes("/classifieds"):
-          summarizeKS();
-      }
+    if (pageURL.includes("/stats/")) {
+      addExtraButtons();
     }
   }
 
@@ -156,8 +149,36 @@
     return itemSKU.replace(/\s/g, "");
   }
 
+  function getManncostoreLink(itemElement) {
+    let item = $(itemElement);
+
+    let itemName = $(".stats-header-title").text().trim();
+
+    let isUnusual = item.attr("data-quality") === "5";
+
+    if (isUnusual) {
+      let effectName = item.attr("data-effect_name");
+
+      if (itemName.includes("Strange")) {
+        itemName = itemName
+          .replace("Strange ", "")
+          .replace(effectName, effectName + " Strange Unusual");
+      } else {
+        itemName = itemName.replace(effectName, effectName + " Unusual");
+      }
+    }
+
+    const itemNameWithoutSymbols = itemName
+      .replace(/ /g, "-")
+      .replace(/[^a-zA-Z0-9-]/g, "")
+      .toLowerCase();
+
+    const offerUrl = `https://mannco.store/item/440-${itemNameWithoutSymbols}`;
+    return offerUrl;
+  }
+
   // Adds a link to the prices.tf page for an item
-  function addMarketplaceButton() {
+  function addExtraButtons() {
     var itemElement = $(".item")[0];
 
     $(".price-boxes").append(
@@ -167,6 +188,17 @@
             <img src="https://prices.tf/favicon.ico" alt="pricestf">
             <div class="text" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 0;">
                 <div class="value" style="font-size: 14px;">Prices.tf</div>
+            </div>
+        </a>`
+    );
+
+    $(".price-boxes").append(
+      `<a class="price-box" href="${getManncostoreLink(
+        itemElement
+      )}" target="_blank" data-tip="top" data-original-title="Prices.tf">
+            <img src="https://mannco.store/statics/img/favicons/favicon.ico" alt="manncostore">
+            <div class="text" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 0;">
+                <div class="value" style="font-size: 14px;">Mannco.store</div>
             </div>
         </a>`
     );
