@@ -5,7 +5,7 @@
 // @version      1.0.7
 // @description  A script to provide extra links for backpack.tf
 // @include      /^https?:\/\/backpack\.tf\/.*
-// @downloadURL  https://github.com/Oddity100/bptf-extra-links/raw/master/bptf-extra-links.user.user.js
+// @downloadURL  https://github.com/Oddity100/bptf-extra-links/raw/main/bptf-extra-links.user.js
 // @require      https://code.jquery.com/jquery-3.5.1.slim.min.js
 // @run-at       document-end
 // ==/UserScript==
