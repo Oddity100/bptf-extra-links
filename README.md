@@ -17,6 +17,12 @@ To install this user script, simply navigate to [this link](https://github.com/O
 
 You can also install this script by manually pasting the code found in the above link into a new user script.
 
+## Examples
+
+![Extra links](https://i.imgur.com/rNXNUGG.png)
+
+_Extra links are shown in Backpack.tf stats page for Prices.tf and Mannco.store_
+
 ## Credits
 
 - Thank you to [@Bonfire](https://github.com/Bonfire) for their [similar project](https://github.com/Bonfire/bptf-misc-utils/).

@@ -26,9 +26,70 @@
 
     // Lazy switch statement (I know...)
     if (pageURL.includes("/stats/")) {
+      injectCSS(css.bptf);
       addExtraButtons();
     }
   }
+
+  const css = {
+    bptf: `
+        .fieldset {
+            padding: revert!important;
+            margin: revert!important;
+            border: 1px solid silver!important;
+            display: flex;
+            align-items: center;
+            width: fit-content;
+        }
+        .fieldset > legend{
+            width: revert!important;
+            border-bottom: 0!important;
+            margin-bottom: revert!important;
+            font-size: 1.5rem;
+        }
+        .fieldset span {
+            color: #B45309;
+        }
+        .fieldset legend{
+            font-weight: 500;
+        }
+
+        .li-options a {
+            display: flex!important;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .li-options svg{
+            width: 1.25em;
+            height: 1.25em;
+            margin-right: 3px;
+        }
+        .li-options path {
+            fill: #333;
+        }
+        .add > div {
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            cursor:pointer; 
+            margin-top: 0;
+        }
+
+        .reload {
+            pointer-events: none;
+        }
+        .reload button{
+            pointer-events:all;
+        }
+
+        @media (max-width: 958.999px){
+            .dropdown-menu path {
+                fill: #888!important;
+            }
+        }
+    `,
+  };
 
   // Stock item def index mappings
   const stockMap = new Map();
@@ -181,26 +242,34 @@
   function addExtraButtons() {
     var itemElement = $(".item")[0];
 
-    $(".price-boxes").append(
-      `<a class="price-box" href="https://prices.tf/items/${itemLookup(
-        itemElement
-      )}" target="_blank" data-tip="top" data-original-title="Prices.tf">
-            <img src="https://prices.tf/favicon.ico" alt="pricestf">
-            <div class="text" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 0;">
-                <div class="value" style="font-size: 14px;">Prices.tf</div>
-            </div>
-        </a>`
-    );
+    const sku = itemLookup(itemElement);
+
+    const pricetfLink = `https://prices.tf/items/${sku}`;
+    const manncostoreLink = getManncostoreLink(itemElement);
 
     $(".price-boxes").append(
-      `<a class="price-box" href="${getManncostoreLink(
-        itemElement
-      )}" target="_blank" data-tip="top" data-original-title="Prices.tf">
-            <img src="https://mannco.store/statics/img/favicons/favicon.ico" alt="manncostore">
-            <div class="text" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 0;">
-                <div class="value" style="font-size: 14px;">Mannco.store</div>
-            </div>
-        </a>`
+      `
+      <fieldset class="fieldset">
+        <legend>Extra links</legend>
+
+        <a class="price-box context add" target="_blank" data-tip="top" href=${pricetfLink}>
+          <img src="https://prices.tf/favicon.ico" alt="pricestf">
+          <div class="text">
+              <div class="value" style="font-size: 14px;">Prices.tf</div>
+          </div>
+        </a>
+
+        <a class="price-box add" target="_blank" href=${manncostoreLink}>
+          <img src="https://mannco.store/statics/img/favicons/favicon.ico" alt="manncostore">
+          <div class="text">
+              <div class="value" style="font-size: 14px;">Mannco.store</div>
+          </div>
+        </a>
+      </fieldset>`
     );
+  }
+
+  function injectCSS(css) {
+    $(document).find("head").append(`<style>${css}</style>`);
   }
 })();
